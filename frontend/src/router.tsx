@@ -16,24 +16,25 @@ import CouponsPromotionsPage from './pages/admin/CouponsPromotionsPage';
 import UsersPage from './pages/admin/UsersPage';
 import ReportsPage from './pages/admin/ReportsPage';
 import SelfOrderConfigPage from './pages/admin/SelfOrderConfigPage';
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 export const router = createBrowserRouter([
   { path: '/', element: <LoginPage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '/signup', element: <SignupPage /> },
-  { path: '/pos', element: <SessionPage /> },
-  { path: '/pos/floor', element: <TableViewPage /> },
-  { path: '/pos/order/:tableId', element: <OrderViewPage /> },
-  { path: '/pos/orders', element: <OrdersListPage /> },
-  { path: '/pos/customers', element: <BookingPage /> },
-  { path: '/kds', element: <KdsPage /> },
-  { path: '/customer-display', element: <CustomerDisplayPage /> },
+  { path: '/pos', element: <ProtectedRoute><SessionPage /></ProtectedRoute> },
+  { path: '/pos/floor', element: <ProtectedRoute><TableViewPage /></ProtectedRoute> },
+  { path: '/pos/order/:tableId', element: <ProtectedRoute><OrderViewPage /></ProtectedRoute> },
+  { path: '/pos/orders', element: <ProtectedRoute><OrdersListPage /></ProtectedRoute> },
+  { path: '/pos/customers', element: <ProtectedRoute><BookingPage /></ProtectedRoute> },
+  { path: '/kds', element: <ProtectedRoute><KdsPage /></ProtectedRoute> },
+  { path: '/customer-display', element: <ProtectedRoute><CustomerDisplayPage /></ProtectedRoute> },
   { path: '/s/:token', element: <SplashPage /> },
-  { path: '/admin/products', element: <ProductsPage /> },
-  { path: '/admin/categories', element: <CategoriesPage /> },
-  { path: '/admin/payment-methods', element: <PaymentMethodsPage /> },
-  { path: '/admin/coupons', element: <CouponsPromotionsPage /> },
-  { path: '/admin/users', element: <UsersPage /> },
-  { path: '/admin/reports', element: <ReportsPage /> },
-  { path: '/admin/self-order-config', element: <SelfOrderConfigPage /> },
+  { path: '/admin/products', element: <ProtectedRoute><ProductsPage /></ProtectedRoute> },
+  { path: '/admin/categories', element: <ProtectedRoute><CategoriesPage /></ProtectedRoute> },
+  { path: '/admin/payment-methods', element: <ProtectedRoute><PaymentMethodsPage /></ProtectedRoute> },
+  { path: '/admin/coupons', element: <ProtectedRoute><CouponsPromotionsPage /></ProtectedRoute> },
+  { path: '/admin/users', element: <ProtectedRoute><UsersPage /></ProtectedRoute> },
+  { path: '/admin/reports', element: <ProtectedRoute><ReportsPage /></ProtectedRoute> },
+  { path: '/admin/self-order-config', element: <ProtectedRoute><SelfOrderConfigPage /></ProtectedRoute> },
 ]);

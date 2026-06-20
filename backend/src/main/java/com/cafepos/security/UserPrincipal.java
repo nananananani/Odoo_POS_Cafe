@@ -1,22 +1,35 @@
 package com.cafepos.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
 public class UserPrincipal implements UserDetails {
+    private final Long id;
     private final String email;
     private final String password;
+    private final String role;
 
-    public UserPrincipal(String email, String password) {
+    public UserPrincipal(Long id, String email, String password, String role) {
+        this.id = id;
         this.email = email;
         this.password = password;
+        this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
     @Override
