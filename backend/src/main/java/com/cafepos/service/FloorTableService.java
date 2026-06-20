@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cafepos.exception.ConflictException;
+
 @Service
 @RequiredArgsConstructor
 public class FloorTableService {
@@ -65,6 +67,9 @@ public class FloorTableService {
     public void deleteFloor(Long id) {
         if (!floorRepository.existsById(id)) {
             throw new NotFoundException("Floor not found with id: " + id);
+        }
+        if (tableRepository.existsByFloorId(id)) {
+            throw new ConflictException("Cannot delete floor with existing tables");
         }
         floorRepository.deleteById(id);
     }
@@ -132,6 +137,9 @@ public class FloorTableService {
     public void deleteTable(Long id) {
         if (!tableRepository.existsById(id)) {
             throw new NotFoundException("Table not found with id: " + id);
+        }
+        if (orderRepository.existsByTableId(id)) {
+            throw new ConflictException("Cannot delete table with existing orders");
         }
         tableRepository.deleteById(id);
     }

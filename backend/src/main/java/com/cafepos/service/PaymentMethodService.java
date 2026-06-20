@@ -14,11 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cafepos.repository.PaymentRepository;
+import com.cafepos.exception.ConflictException;
+
 @Service
 @RequiredArgsConstructor
 public class PaymentMethodService {
 
     private final PaymentMethodRepository paymentMethodRepository;
+    private final PaymentRepository paymentRepository;
 
     @Transactional(readOnly = true)
     public List<PaymentMethodResponse> getAllPaymentMethods() {
@@ -73,6 +77,9 @@ public class PaymentMethodService {
     public void deletePaymentMethod(Long id) {
         if (!paymentMethodRepository.existsById(id)) {
             throw new NotFoundException("Payment method not found with id: " + id);
+        }
+        if (paymentRepository.existsByMethodId(id)) {
+            throw new ConflictException("Cannot delete payment method with existing payments");
         }
         paymentMethodRepository.deleteById(id);
     }

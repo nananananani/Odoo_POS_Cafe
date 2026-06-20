@@ -12,11 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cafepos.repository.ProductRepository;
+import com.cafepos.exception.ConflictException;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> getAllCategories() {
@@ -58,6 +62,9 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         if (!categoryRepository.existsById(id)) {
             throw new NotFoundException("Category not found with id: " + id);
+        }
+        if (productRepository.existsByCategoryId(id)) {
+            throw new ConflictException("Cannot delete category with existing products");
         }
         categoryRepository.deleteById(id);
     }

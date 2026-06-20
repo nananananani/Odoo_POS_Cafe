@@ -10,4 +10,6 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findBySessionId(Long sessionId);
     List<Order> findByTableIdAndStatus(Long tableId, OrderStatus status);
+    boolean existsByCustomerId(Long customerId);
+    boolean existsByTableId(Long tableId);
 }
