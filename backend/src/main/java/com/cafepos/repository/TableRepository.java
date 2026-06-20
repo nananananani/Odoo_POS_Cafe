@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TableRepository extends JpaRepository<Table, Long> {
+    boolean existsByFloorIdAndNumber(Long floorId, Integer number);
+    boolean existsByFloorIdAndNumberAndIdNot(Long floorId, Integer number, Long id);
 }

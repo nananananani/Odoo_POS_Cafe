@@ -35,4 +35,8 @@ public class Product {
 
     @Column(name = "show_on_kds", nullable = false)
     private Boolean showOnKds;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean active = true;
 }

@@ -29,7 +29,7 @@ public class SecurityConfig {
             .cors(cors -> {}) // configuration is handled in CorsConfig.java
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/api/s/**", "/api/self-order/qr/**").permitAll()
+                .requestMatchers("/api/auth/**", "/api/s/**", "/api/self-order/qr/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
             )
